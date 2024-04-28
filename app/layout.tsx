@@ -18,7 +18,7 @@ export default function RootLayout({
 }>) {
   return (
     <ClerkProvider>
-      <html lang="en">
+      <html lang="en" suppressHydrationWarning suppressContentEditableWarning>
         <body className={inter.className}>
           <Providers>
             {children}
