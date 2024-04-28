@@ -8,12 +8,29 @@ datasource db {
 }
 
 model User {
-  id           String @id @default(auto()) @map("_id") @db.ObjectId
-  clerkUserId  String
-  emailAddress String @unique
+  id           String         @id @default(auto()) @map("_id") @db.ObjectId
+  clerkUserId  String         @unique
+  emailAddress String         @unique
   firstName    String
   lastName     String
   imageUrl     String
+  codeSnippets CodeSnippets[]
 
-  @@index([clerkUserId])
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model CodeSnippets {
+  id          String  @id @default(auto()) @map("_id") @db.ObjectId
+  name        String
+  language    String
+  theme       String
+  isPublished Boolean @default(false)
+  codeContent String
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  clerkUserId String
+  user        User   @relation(fields: [clerkUserId], references: [clerkUserId], onDelete: Cascade)
 }

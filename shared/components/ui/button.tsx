@@ -19,7 +19,8 @@ const buttonVariants = cva(
         ghost: "hover:bg-accent hover:text-accent-foreground",
         link: "text-primary underline-offset-4 hover:underline",
         "custom_blue": "text-cblue bg-cblue/10 transition-all duration-300",
-        "custom_ghost": "text-cslate hover:bg-cblue/10 hover:text-cblue transition-all duration-300"
+        "custom_ghost": "text-cslate hover:bg-cblue/10 hover:text-cblue transition-all duration-300",
+        "custom_blue_outlined": "border-[.6px] border-gray-100  text-gray-100 hover:border-cblue hover:text-cblue transition-all duratin-300"
       },
       size: {
         default: "h-10 px-4 py-2",

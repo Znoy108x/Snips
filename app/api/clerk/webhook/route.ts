@@ -7,15 +7,23 @@ export async function POST(req: NextRequest) {
   const { type, data } = payload;
   try {
     if (type === "user.created") {
-      console.log(data);
+      // console.log(data);
       const emailAddress = data.email_addresses[0].email_address;
       const { first_name, last_name, image_url, id } = data;
-      const userData = await prismaDb.user.create({
+      const isUserAlreadyPresent = await prismaDb.user.findUnique({
+        where: {
+          emailAddress,
+        },
+      });
+      if (isUserAlreadyPresent) {
+        return new NextResponse("User already present", { status: 400 });
+      }
+      await prismaDb.user.create({
         data: {
-          clerkUserid: id,
+          clerkUserId: id,
           emailAddress,
           firstName: first_name,
-          lastName: last_name,
+          lastName: last_name || "",
           imageUrl: image_url,
         },
       });
@@ -26,7 +34,7 @@ export async function POST(req: NextRequest) {
       console.log("USER_UPDATED_EVENT");
     }
   } catch (err) {
-    console.log("CLERK__WEBHOOK__ERROR");
+    console.log("CLERK__WEBHOOK__ERROR", err);
     return NextResponse.json(
       { mssage: "Something went wrong" },
       { status: 501 }
