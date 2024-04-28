@@ -22,8 +22,6 @@ const Sidebar = () => {
         }
     ]
 
-    console.log(pathName)
-
     return (
         <div className='w-full h-full border-r-[1px]  border-cborder'>
             <div className='flex flex-col gap-y-2 p-5'>

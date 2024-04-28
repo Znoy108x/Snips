@@ -1,5 +1,5 @@
 "use client"
-import React from 'react'
+import React, { Fragment } from 'react'
 import {
     Breadcrumb,
     BreadcrumbItem,
@@ -22,7 +22,7 @@ const PageTitle = ({ title }: { title: string }) => {
                         pathArr.map((path, index) => {
                             const pathName = path.split("-").join(" ")
                             return (
-                                <>
+                                <Fragment key={index}>
                                     <BreadcrumbItem>
                                         <BreadcrumbLink href={path}>{pathName}</BreadcrumbLink>
                                     </BreadcrumbItem>
@@ -31,7 +31,7 @@ const PageTitle = ({ title }: { title: string }) => {
                                             <BreadcrumbSeparator />
                                         )
                                     }
-                                </>
+                                </Fragment>
                             )
                         })
                     }

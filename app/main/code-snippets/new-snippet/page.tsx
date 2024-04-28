@@ -47,7 +47,7 @@ const NewSnippetPage = () => {
         try {
             await axios.post("/api/code-snippet", data)
         } catch (err: any) {
-            throw new Error(err)
+            throw new Error(err?.response?.data)
         }
     }
     const handleContentCreate = () => {
@@ -87,6 +87,8 @@ const NewSnippetPage = () => {
                 () => {
                     setIsSubmitting(false)
                     resetStateData()
+                    router.push("/main/code-snippets")
+                    router.refresh()
                 },
                 () => {
                     setIsSubmitting(false)

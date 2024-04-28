@@ -7,7 +7,6 @@ export async function POST(req: NextRequest) {
   const { type, data } = payload;
   try {
     if (type === "user.created") {
-      // console.log(data);
       const emailAddress = data.email_addresses[0].email_address;
       const { first_name, last_name, image_url, id } = data;
       const isUserAlreadyPresent = await prismaDb.user.findUnique({
