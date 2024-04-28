@@ -4,6 +4,7 @@ import { CodeSnippetDBDataType } from "@/shared/types/CodeSnippet.types";
 import { DateFromatter } from "@/shared/lib/dateFromatter";
 import { CodeSnippetActions } from "../actions/CodeSnippetActions";
 import { Button } from "@/shared/components/ui/button";
+import Link from "next/link";
 
 
 export const CodeSnippetTableColumn: ColumnDef<CodeSnippetDBDataType>[] = [
@@ -33,7 +34,7 @@ export const CodeSnippetTableColumn: ColumnDef<CodeSnippetDBDataType>[] = [
     accessorKey: "name",
     header: "Name",
     cell: ({ row }) => (
-      <div className="capitalize">{row.getValue("name")}</div>
+      <Link href={`/main/code-snippets/${row.original.id}`} className="capitalize text-cblue underline underline-offset-4 font-medium text-md">{row.getValue("name")}</Link>
     ),
   },
   {

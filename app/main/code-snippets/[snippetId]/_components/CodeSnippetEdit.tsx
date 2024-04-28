@@ -1,26 +1,30 @@
 "use client"
 import { Button } from '@/shared/components/ui/button'
 import { Input } from '@/shared/components/ui/input'
-import { Plus } from 'lucide-react'
+import { CircleCheckBig, Plus } from 'lucide-react'
 import { useRouter } from 'next13-progressbar'
-import React, { useLayoutEffect, useState } from 'react'
-import EditorComp from '../../_components/EditorComp'
-import { LanguageDropDown } from '../../_components/drop-downs/LanguageDropDown'
-import { LangType, languageOptions } from '../../_components/drop-downs/langData'
+import React, { useEffect, useLayoutEffect, useState } from 'react'
 import { defineTheme } from '@/shared/lib/themeLoader'
-import { ThemeDropDown } from '../../_components/drop-downs/ThemeDropDown'
 import { DarkToast, PromiseNotification } from '@/shared/lib/Toasts'
 import axios from 'axios'
-import { CreateCodeSnippetReqData } from '@/shared/types/CodeSnippet.types'
-import { useClerk } from '@clerk/nextjs'
+import { CodeSnippetDBDataType, CreateCodeSnippetReqData } from '@/shared/types/CodeSnippet.types'
+import { useParams } from 'next/navigation'
+import { LangType, languageOptions } from '@/app/main/_components/drop-downs/langData'
+import { LanguageDropDown } from '@/app/main/_components/drop-downs/LanguageDropDown'
+import { ThemeDropDown } from '@/app/main/_components/drop-downs/ThemeDropDown'
+import EditorComp from '@/app/main/_components/EditorComp'
+import { monacoThemes } from '@/app/main/_components/drop-downs/themeData'
 
-const NewSnippetPage = () => {
+export const CodeSnippetEdit = ({ data }: { data?: CodeSnippetDBDataType | null }) => {
 
     const router = useRouter()
-    const [snippetTitle, setSnippetTitle] = useState("")
+    const { snippetId } = useParams()
+    const isCreatePath = snippetId === "new-snippet"
+    const [snippetTitle, setSnippetTitle] = useState<string>(isCreatePath ? "" : data?.name || "")
     const [isSubmitting, setIsSubmitting] = useState(false)
     const [snippetTheme, setSnippetTheme] = useState<string>("")
-    const [snippetLang, setSnippetLang] = useState<LangType>(languageOptions[0])
+    const filteredLang: LangType = languageOptions.filter((lang) => lang.value === data?.language)[0]
+    const [snippetLang, setSnippetLang] = useState<LangType>(isCreatePath ? languageOptions[0] : filteredLang)
     const [snippetCode, setSnippetCode] = useState<string | undefined>("console.log('Hello Snips 👾')")
 
     const resetStateData = () => {
@@ -43,14 +47,24 @@ const NewSnippetPage = () => {
             defineTheme(theme).then((_) => setSnippetTheme(theme));
         }
     }
-    const handlePostApiCall = async (data: CreateCodeSnippetReqData): Promise<void> => {
+
+    const handlePostApiCall = async (reqData: CreateCodeSnippetReqData): Promise<void> => {
         try {
-            await axios.post("/api/code-snippet", data)
+            await axios.post("/api/code-snippet", reqData)
         } catch (err: any) {
             throw new Error(err?.response?.data)
         }
     }
-    const handleContentCreate = () => {
+
+    const handlePatchApiCall = async (reqData: CreateCodeSnippetReqData): Promise<void> => {
+        try {
+            await axios.patch(`/api/code-snippet/${data?.id}`, reqData)
+        } catch (err: any) {
+            throw new Error(err?.response?.data)
+        }
+    }
+
+    const handleContentChange = () => {
         setIsSubmitting(true)
         let error = false;
         let errorText = ""
@@ -74,31 +88,52 @@ const NewSnippetPage = () => {
             setIsSubmitting(false)
             DarkToast(errorText)
         } else {
-            const data: CreateCodeSnippetReqData = {
+            const reqData: CreateCodeSnippetReqData = {
                 name: snippetTitle,
                 language: snippetLang.value,
                 theme: snippetTheme,
                 codeContent: snippetCode!
             }
-            PromiseNotification(
-                handlePostApiCall(data),
-                "Creating snippet.",
-                "Snippet created successfully",
-                () => {
-                    setIsSubmitting(false)
-                    resetStateData()
-                    router.push("/main/code-snippets")
-                    router.refresh()
-                },
-                () => {
-                    setIsSubmitting(false)
-                }
-            )
+            if (!isCreatePath) {
+                PromiseNotification(
+                    handlePatchApiCall(reqData),
+                    "Updating snippet.",
+                    "Snippet updated successfully",
+                    () => {
+                        setIsSubmitting(false)
+                        resetStateData()
+                        router.back()
+                        router.refresh()
+                    },
+                    () => {
+                        setIsSubmitting(false)
+                    }
+                )
+            } else {
+                PromiseNotification(
+                    handlePostApiCall(reqData),
+                    "Creating snippet.",
+                    "Snippet created successfully",
+                    () => {
+                        setIsSubmitting(false)
+                        resetStateData()
+                        router.push("/main/code-snippets")
+                        router.refresh()
+                    },
+                    () => {
+                        setIsSubmitting(false)
+                    }
+                )
+            }
         }
     }
 
     useLayoutEffect(() => {
-        defineTheme("brilliance-dull").then(() => setSnippetTheme("brilliance-dull"))
+        if (!isCreatePath) {
+            defineTheme(data?.theme!).then(() => setSnippetTheme(data?.theme!))
+        } else {
+            defineTheme("brilliance-dull").then(() => setSnippetTheme("brilliance-dull"))
+        }
     }, [])
 
     return (
@@ -116,9 +151,9 @@ const NewSnippetPage = () => {
                         }} disabled={isSubmitting}>
                             Cancel
                         </Button>
-                        <Button className='text-white w-1/2' size="sm" disabled={isSubmitting} onClick={handleContentCreate}>
-                            <Plus className='size-5 mr-2' />
-                            Create
+                        <Button className='text-white w-1/2' size="sm" disabled={isSubmitting} onClick={handleContentChange}>
+                            <Plus className='size-5 mr-1' />
+                            {isCreatePath ? "Create" : "Save"}
                         </Button>
                     </div>
                 </div>
@@ -129,5 +164,3 @@ const NewSnippetPage = () => {
         </div>
     )
 }
-
-export default NewSnippetPage
