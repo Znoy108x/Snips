@@ -1,4 +1,4 @@
-import { CodeSnippets, User } from "@prisma/client";
+import { CodeSnippets, SnapShot, User } from "@prisma/client";
 
 export type CreateCodeSnippetReqData = {
   name: string;
@@ -21,4 +21,12 @@ export type CodeSnippetDBDataType = {
 
 export type FullUserData = User & {
   codeSnippets: CodeSnippets[];
+};
+
+export type UserDataWithSnapShots = User & {
+  snapShots: SnapShot[];
+};
+
+export type SnapShotWithSnippet = SnapShot & {
+  codeSnippet: CodeSnippets;
 };

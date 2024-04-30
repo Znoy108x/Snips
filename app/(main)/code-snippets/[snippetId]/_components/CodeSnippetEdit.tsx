@@ -9,11 +9,10 @@ import { DarkToast, PromiseNotification } from '@/shared/lib/Toasts'
 import axios from 'axios'
 import { CodeSnippetDBDataType, CreateCodeSnippetReqData } from '@/shared/types/CodeSnippet.types'
 import { useParams } from 'next/navigation'
-import { LangType, languageOptions } from '@/app/main/_components/drop-downs/langData'
-import { LanguageDropDown } from '@/app/main/_components/drop-downs/LanguageDropDown'
-import { ThemeDropDown } from '@/app/main/_components/drop-downs/ThemeDropDown'
-import EditorComp from '@/app/main/_components/EditorComp'
-import { monacoThemes } from '@/app/main/_components/drop-downs/themeData'
+import { LangType, languageOptions } from '@/app/(main)/_components/drop-downs/langData'
+import { LanguageDropDown } from '@/app/(main)/_components/drop-downs/LanguageDropDown'
+import { ThemeDropDown } from '@/app/(main)/_components/drop-downs/ThemeDropDown'
+import EditorComp from '@/app/(main)/_components/EditorComp'
 
 export const CodeSnippetEdit = ({ data }: { data?: CodeSnippetDBDataType | null }) => {
 

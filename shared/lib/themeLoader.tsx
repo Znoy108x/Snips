@@ -1,5 +1,5 @@
 import { loader } from "@monaco-editor/react";
-import { monacoThemes } from "@/app/main/_components/drop-downs/themeData"
+import { monacoThemes } from "@/app/(main)/_components/drop-downs/themeData"
 
 const defineTheme = (theme: string) => {
     return new Promise((res: Function) => {
