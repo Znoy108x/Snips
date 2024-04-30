@@ -15,6 +15,7 @@ model User {
   lastName     String
   imageUrl     String
   codeSnippets CodeSnippets[]
+  snapShots    SnapShot[]
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -33,4 +34,18 @@ model CodeSnippets {
 
   clerkUserId String
   user        User   @relation(fields: [clerkUserId], references: [clerkUserId], onDelete: Cascade)
+
+  snapShots SnapShot[]
+}
+
+model SnapShot {
+  id            String       @id @default(auto()) @map("_id") @db.ObjectId
+  name          String
+  clerkUserId   String
+  user          User         @relation(fields: [clerkUserId], references: [clerkUserId])
+  codeSnippetId String       @db.ObjectId
+  codeSnippet   CodeSnippets @relation(fields: [codeSnippetId], references: [id])
+  gradientName  String
+  createdAt     DateTime     @default(now())
+  updatedAt     DateTime     @updatedAt
 }

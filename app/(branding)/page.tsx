@@ -5,7 +5,7 @@ const BrandingPage = () => {
     return (
         <div>
             Branding page
-            <Link href="/main" className='text-white'>Main</Link>
+            <Link href="/code-snippets" className='text-white'>Main</Link>
         </div>
     )
 }

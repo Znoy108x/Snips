@@ -5,7 +5,7 @@ export default authMiddleware({
   publicRoutes: ["/api/uploadthing"],
   // Prevent the specified routes from accessing
   // authentication information:
-  ignoredRoutes: ["/api/clerk/webhook"],
+  ignoredRoutes: ["/api/clerk/webhook", "/"],
 });
 
 export const config = {

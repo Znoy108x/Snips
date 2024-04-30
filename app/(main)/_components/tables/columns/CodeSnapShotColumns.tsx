@@ -1,13 +1,14 @@
 import { Checkbox } from "@/shared/components/ui/checkbox";
 import { ColumnDef } from "@tanstack/react-table";
-import { CodeSnippetDBDataType } from "@/shared/types/CodeSnippet.types";
 import { DateFromatter } from "@/shared/lib/dateFromatter";
 import { CodeSnippetActions } from "../actions/CodeSnippetActions";
 import { Button } from "@/shared/components/ui/button";
 import Link from "next/link";
+import { SnapShotWithSnippet } from "@/shared/types/CodeSnippet.types";
+import { SnapShotActions } from "../actions/SnapShotActions";
 
 
-export const CodeSnippetTableColumn: ColumnDef<CodeSnippetDBDataType>[] = [
+export const CodeSnapShotColumns: ColumnDef<SnapShotWithSnippet>[] = [
   {
     id: "select",
     header: ({ table }) => (
@@ -34,36 +35,21 @@ export const CodeSnippetTableColumn: ColumnDef<CodeSnippetDBDataType>[] = [
     accessorKey: "name",
     header: "Name",
     cell: ({ row }) => (
-      <Link href={`/main/code-snippets/${row.original.id}`} className="capitalize text-cblue underline underline-offset-4 font-medium text-md">{row.getValue("name")}</Link>
+      <Link href={`/code-snippets/${row.original.id}`} className="capitalize text-cblue underline underline-offset-4 font-medium text-md">{row.getValue("name")}</Link>
     ),
   },
   {
-    accessorKey: "language",
-    header: "Language",
+    accessorKey: "codeSnippet",
+    header: "Snippet Name",
     cell: ({ row }) => (
-      <div className="capitalize">{row.getValue("language")}</div>
+      <div className="capitalize">{row.getValue("codeSnippet")?.name}</div>
     ),
   },
   {
-    accessorKey: "theme",
-    header: "Theme",
+    accessorKey: "gradientName",
+    header: "Gradient Name",
     cell: ({ row }) => (
-      <div className="capitalize">{row.getValue("theme")}</div>
-    ),
-  },
-  {
-    accessorKey: "isPublished",
-    header: "Published",
-    cell: ({ row }) => (
-      <div className="">
-        {
-          row.original.isPublished ? (
-            <Button variant={"custom_blue"}>True</Button>
-          ) : (
-            <Button variant={"custom_red_outlined"}>False</Button>
-          )
-        }
-      </div>
+      <div className="capitalize">{row.getValue("gradientName")}</div>
     ),
   },
   {
@@ -77,7 +63,7 @@ export const CodeSnippetTableColumn: ColumnDef<CodeSnippetDBDataType>[] = [
     id: "actions",
     enableHiding: false,
     cell: ({ row }) => {
-      return <CodeSnippetActions rowData={row.original} />
+      return <SnapShotActions rowData={row.original} />
     },
   },
 ];

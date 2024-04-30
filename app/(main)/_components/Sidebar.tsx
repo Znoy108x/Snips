@@ -30,7 +30,7 @@ const Sidebar = () => {
                         const isActive = pathName.includes(route.path)
                         return (
                             <Button variant={isActive ? "custom_blue" : "custom_ghost"} key={route.path} onClick={() => {
-                                router.push("/main" + route.path)
+                                router.push(route.path)
                             }}>
                                 <div className='flex items-center gap-x-4 w-[200px] '>
                                     <span className=''>
