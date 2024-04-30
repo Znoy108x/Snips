@@ -24,7 +24,7 @@ export const CodeSnippetEdit = ({ data }: { data?: CodeSnippetDBDataType | null 
     const [snippetTheme, setSnippetTheme] = useState<string>("")
     const filteredLang: LangType = languageOptions.filter((lang) => lang.value === data?.language)[0]
     const [snippetLang, setSnippetLang] = useState<LangType>(isCreatePath ? languageOptions[0] : filteredLang)
-    const [snippetCode, setSnippetCode] = useState<string | undefined>("console.log('Hello Snips 👾')")
+    const [snippetCode, setSnippetCode] = useState<string | undefined>(data?.codeContent ? data.codeContent : "console.log('Hello Snips 👾')")
 
     const resetStateData = () => {
         setSnippetCode("console.log('Hello Snips!')")
@@ -116,7 +116,7 @@ export const CodeSnippetEdit = ({ data }: { data?: CodeSnippetDBDataType | null 
                     () => {
                         setIsSubmitting(false)
                         resetStateData()
-                        router.push("/main/code-snippets")
+                        router.push("/code-snippets")
                         router.refresh()
                     },
                     () => {
