@@ -86,16 +86,12 @@ export const CustomTable = <TData, TValue>({ data, columns }: CustomTableInterfa
                     className="max-w-sm"
                 />
                 <div className="flex items-center gap-x-4">
-                    {
-                        isSnippetPage && (
-                            <Button className="text-white flex gap-x-2" onClick={() => router.push("/main/code-snippets/new-snippet")}>
-                                <PlusCircle className="size-4" />
-                                <span>
-                                    Create
-                                </span>
-                            </Button>
-                        )
-                    }
+                    <Button className="text-white flex gap-x-2" onClick={() => router.push(isSnippetPage ? "/code-snippets/new-snippet" : "/snap-shots/new-snippet")}>
+                        <PlusCircle className="size-4" />
+                        <span>
+                            Create
+                        </span>
+                    </Button>
                     <DropdownMenu>
                         <DropdownMenuTrigger asChild>
                             <Button variant="outline" className="ml-auto">

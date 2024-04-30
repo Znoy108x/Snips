@@ -1,0 +1,18 @@
+export const GradientsDetails: Record<string, string> = {
+  hyper: "bg-gradient-to-r from-pink-500 via-red-500 to-yellow-500",
+  oceanic: "bg-gradient-to-r from-green-300 via-blue-500 to-purple-600",
+  cottonCandy: "bg-gradient-to-r from-pink-300 via-purple-300 to-indigo-400",
+  beachSide: "bg-gradient-to-r from-yellow-200 via-green-200 to-green-500",
+  peachy: "bg-gradient-to-r from-red-200 via-red-300 to-yellow-200",
+  seaFoam: "bg-gradient-to-r from-green-200 via-green-300 to-blue-500",
+  pandora: "bg-gradient-to-r from-green-200 via-green-400 to-purple-700",
+  valentine: "bg-gradient-to-r from-red-200 to-red-600",
+  lavender: "bg-gradient-to-r from-indigo-300 to-purple-400",
+  arendelle: "bg-gradient-to-r from-blue-100 via-blue-300 to-blue-500",
+  minnesota: "bg-gradient-to-r from-purple-400 to-yellow-400",
+  bombpop: "bg-gradient-to-r from-red-400 via-gray-300 to-blue-500",
+  strawberry: "bg-gradient-to-r from-yellow-200 via-pink-200 to-pink-400",
+  sky: "bg-gradient-to-b from-sky-400 to-sky-200",
+  earth: "bg-gradient-to-r from-teal-200 to-lime-200",
+  blueCoral: "bg-gradient-to-r from-blue-400 to-emerald-400",
+};
