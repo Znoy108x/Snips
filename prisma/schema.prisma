@@ -22,15 +22,14 @@ model User {
 }
 
 model CodeSnippets {
-  id          String  @id @default(auto()) @map("_id") @db.ObjectId
-  name        String
-  language    String
-  theme       String
-  isPublished Boolean @default(false)
-  codeContent String
-
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  id            String   @id @default(auto()) @map("_id") @db.ObjectId
+  name          String   @unique
+  language      String
+  theme         String
+  isPublished   Boolean  @default(false)
+  codeContent   String
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
 
   clerkUserId String
   user        User   @relation(fields: [clerkUserId], references: [clerkUserId], onDelete: Cascade)
@@ -40,11 +39,11 @@ model CodeSnippets {
 
 model SnapShot {
   id            String       @id @default(auto()) @map("_id") @db.ObjectId
-  name          String
+  name          String       @unique
   clerkUserId   String
-  user          User         @relation(fields: [clerkUserId], references: [clerkUserId])
+  user          User         @relation(fields: [clerkUserId], references: [clerkUserId], onDelete: Cascade)
   codeSnippetId String       @db.ObjectId
-  codeSnippet   CodeSnippets @relation(fields: [codeSnippetId], references: [id])
+  codeSnippet   CodeSnippets @relation(fields: [codeSnippetId], references: [id], onDelete: Cascade)
   gradientName  String
   createdAt     DateTime     @default(now())
   updatedAt     DateTime     @updatedAt

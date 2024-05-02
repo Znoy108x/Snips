@@ -21,15 +21,17 @@ import { CodeSnippetDBDataType } from '@/shared/types/CodeSnippet.types'
 import { getAllCodeSnippets } from '@/shared/actions/codeSnippet.action'
 
 interface CodeSnippetComboBoxProps {
-    onChange: (key: keyof typeof GradientsDetails) => void
+    onChange: (val: CodeSnippetDBDataType) => void,
+    disabled: boolean,
+    initialData : CodeSnippetDBDataType
 }
 
-const CodeSnippetComboBox = ({ onChange }: CodeSnippetComboBoxProps) => {
+const CodeSnippetComboBox = ({  initialData ,onChange, disabled }: CodeSnippetComboBoxProps) => {
 
     const [isLoading, setIsLoading] = useState(true)
     const [open, setOpen] = React.useState(false)
     const [codeSnippets, setCodeSnippets] = useState<CodeSnippetDBDataType[]>([])
-    const [value, setValue] = React.useState<CodeSnippetDBDataType>({} as CodeSnippetDBDataType)
+    const [value, setValue] = React.useState<CodeSnippetDBDataType>(initialData)
 
     const fetchCodeSnippets = async () => {
         const allCodeSnippets = await getAllCodeSnippets()
@@ -45,6 +47,7 @@ const CodeSnippetComboBox = ({ onChange }: CodeSnippetComboBoxProps) => {
         <Popover open={open} onOpenChange={setOpen}>
             <PopoverTrigger asChild>
                 <Button
+                    disabled={disabled}
                     variant="outline"
                     role="combobox"
                     aria-expanded={open}
@@ -78,7 +81,7 @@ const CodeSnippetComboBox = ({ onChange }: CodeSnippetComboBoxProps) => {
                                     key={snippet.id}
                                     value={snippet.name}
                                     onSelect={(currentValue) => {
-                                        onChange(snippet.codeContent)
+                                        onChange(snippet)
                                         setValue(snippet)
                                         setOpen(false)
                                     }}>

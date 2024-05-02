@@ -18,10 +18,11 @@ import {
 } from "@/shared/components/ui/popover"
 
 interface ThemeComboboxProps {
-    onChange: (key: keyof typeof GradientsDetails) => void
+    onChange: (key: keyof typeof GradientsDetails) => void,
+    disabled: boolean
 }
 
-const ThemeComboBox = ({ onChange }: ThemeComboboxProps) => {
+const ThemeComboBox = ({ onChange, disabled }: ThemeComboboxProps) => {
 
     const [open, setOpen] = React.useState(false)
     const [value, setValue] = React.useState<keyof typeof GradientsDetails>("hyper")
@@ -30,6 +31,7 @@ const ThemeComboBox = ({ onChange }: ThemeComboboxProps) => {
         <Popover open={open} onOpenChange={setOpen}>
             <PopoverTrigger asChild>
                 <Button
+                    disabled={disabled}
                     variant="outline"
                     role="combobox"
                     aria-expanded={open}

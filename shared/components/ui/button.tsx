@@ -21,7 +21,8 @@ const buttonVariants = cva(
         "custom_blue": "text-cblue bg-cblue/10 transition-all duration-300",
         "custom_ghost": "text-cslate hover:bg-cblue/10 hover:text-cblue transition-all duration-300",
         "custom_blue_outlined": "border-[.6px] border-gray-100  text-gray-100 hover:border-cblue hover:text-cblue transition-all duratin-300",
-        "custom_red_outlined": "bg-red-500/10 text-red-700 hover:bg-destructive/90"
+        "custom_red_outlined": "bg-red-500/10 text-red-700 hover:bg-destructive/90",
+        "custom_destructive": "bg-red-600 text-white"
       },
       size: {
         default: "h-10 px-4 py-2",

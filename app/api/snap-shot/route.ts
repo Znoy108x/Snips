@@ -1,7 +1,10 @@
 import { auth } from "@clerk/nextjs";
 import { NextRequest, NextResponse } from "next/server";
 import prismadb from "@/shared/lib/prismaDb";
-import { CreateCodeSnippetReqData } from "@/shared/types/CodeSnippet.types";
+import {
+  CreateCodeSnippetReqData,
+  CreateSnapShotReqData,
+} from "@/shared/types/CodeSnippet.types";
 
 export async function POST(req: NextRequest) {
   try {
@@ -19,36 +22,23 @@ export async function POST(req: NextRequest) {
         status: 400,
       });
     }
-    const { name, language, theme, codeContent }: CreateCodeSnippetReqData =
+    const { name, codeSnippetId, gradientName }: CreateSnapShotReqData =
       await req.json();
-    if (!name || !language || !theme || !codeContent) {
+    if (!name || !codeSnippetId || !gradientName) {
       return new NextResponse(
         "Please give all fields to create new code snippet",
         { status: 400 }
       );
     }
-    const isPresent = await prismadb.codeSnippets.findFirst({
-      where: {
-        clerkUserId: userId,
-        name: name,
-      },
-    });
-    if (isPresent) {
-      return new NextResponse(
-        "Name must be unique, please give it a different name",
-        { status: 400 }
-      );
-    }
-    const newCodeSnippet = await prismadb.codeSnippets.create({
+    const newSnapShot = await prismadb.snapShot.create({
       data: {
-        name,
-        language,
-        theme,
-        codeContent,
         clerkUserId: userId,
+        name,
+        gradientName,
+        codeSnippetId,
       },
     });
-    return NextResponse.json(newCodeSnippet);
+    return NextResponse.json(newSnapShot);
   } catch (err: any) {
     return new NextResponse("Something Went Wrong", { status: 501 });
   }

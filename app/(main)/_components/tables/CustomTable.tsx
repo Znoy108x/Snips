@@ -86,7 +86,7 @@ export const CustomTable = <TData, TValue>({ data, columns }: CustomTableInterfa
                     className="max-w-sm"
                 />
                 <div className="flex items-center gap-x-4">
-                    <Button className="text-white flex gap-x-2" onClick={() => router.push(isSnippetPage ? "/code-snippets/new-snippet" : "/snap-shots/new-snippet")}>
+                    <Button className="text-white flex gap-x-2" onClick={() => router.push(isSnippetPage ? "/code-snippets/new-snippet" : "/snap-shots/new-snap-shot")}>
                         <PlusCircle className="size-4" />
                         <span>
                             Create

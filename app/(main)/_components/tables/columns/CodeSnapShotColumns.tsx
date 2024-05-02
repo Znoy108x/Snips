@@ -6,6 +6,8 @@ import { Button } from "@/shared/components/ui/button";
 import Link from "next/link";
 import { SnapShotWithSnippet } from "@/shared/types/CodeSnippet.types";
 import { SnapShotActions } from "../actions/SnapShotActions";
+import { cn } from "@/shared/lib/utils";
+import { GradientsDetails } from "@/shared/lib/gradientsDetails";
 
 
 export const CodeSnapShotColumns: ColumnDef<SnapShotWithSnippet>[] = [
@@ -35,21 +37,26 @@ export const CodeSnapShotColumns: ColumnDef<SnapShotWithSnippet>[] = [
     accessorKey: "name",
     header: "Name",
     cell: ({ row }) => (
-      <Link href={`/code-snippets/${row.original.id}`} className="capitalize text-cblue underline underline-offset-4 font-medium text-md">{row.getValue("name")}</Link>
+      <Link href={`/snap-shots/${row.original.id}`} className="capitalize text-cblue underline underline-offset-4 font-medium text-md">{row.getValue("name")}</Link>
     ),
   },
   {
     accessorKey: "codeSnippet",
     header: "Snippet Name",
-    cell: ({ row }) => (
-      <div className="capitalize">{row.getValue("codeSnippet")?.name}</div>
-    ),
+    cell: ({ row }) => {
+      const rowData = row.getValue("codeSnippet") as SnapShotWithSnippet
+      return (
+        <div className="capitalize"> {rowData.name as keyof typeof rowData}</div>
+      )
+    }
   },
   {
     accessorKey: "gradientName",
-    header: "Gradient Name",
+    header: () => {
+      return <div className="text-center">Gradient</div>
+    },
     cell: ({ row }) => (
-      <div className="capitalize">{row.getValue("gradientName")}</div>
+      <div className={cn("capitalize text-gray-800 p-2 rounded-sm text-center font-semibold", GradientsDetails[row.getValue("gradientName") as keyof typeof GradientsDetails])}>{row.getValue("gradientName")}</div>
     ),
   },
   {

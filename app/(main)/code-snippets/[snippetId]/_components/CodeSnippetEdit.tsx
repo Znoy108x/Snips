@@ -59,6 +59,7 @@ export const CodeSnippetEdit = ({ data }: { data?: CodeSnippetDBDataType | null 
         try {
             await axios.patch(`/api/code-snippet/${data?.id}`, reqData)
         } catch (err: any) {
+            console.log(err)
             throw new Error(err?.response?.data)
         }
     }

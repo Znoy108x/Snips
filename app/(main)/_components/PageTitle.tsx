@@ -26,11 +26,7 @@ const PageTitle = ({ title }: { title: string }) => {
                                     <BreadcrumbItem>
                                         <BreadcrumbLink href={path}>{pathName}</BreadcrumbLink>
                                     </BreadcrumbItem>
-                                    {
-                                        index < path.length - 1 && (
-                                            <BreadcrumbSeparator />
-                                        )
-                                    }
+                                    <BreadcrumbSeparator />
                                 </Fragment>
                             )
                         })

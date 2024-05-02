@@ -1,13 +1,13 @@
-import Link from 'next/link'
-import React from 'react'
+import { auth } from "@clerk/nextjs";
+import HeroInfo from "./_component/HeroInfo";
 
 const BrandingPage = () => {
+
+    const { userId } = auth()
+
     return (
-        <div>
-            Branding page
-            <Link href="/code-snippets" className='text-white'>Main</Link>
-        </div>
-    )
+        <HeroInfo userId={userId} />
+    );
 }
 
 export default BrandingPage
