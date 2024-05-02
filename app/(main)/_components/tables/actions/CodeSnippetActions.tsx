@@ -59,7 +59,6 @@ export const CodeSnippetActions = ({ rowData }: { rowData: CodeSnippets }) => {
     const handleCopyCodeSnippetLink = () => {
         const link = `/code-share/${rowData.id}`
         navigator.clipboard.writeText(link)
-        router.push(link)
         SuccessNotification("Link Copied")
     }
 
