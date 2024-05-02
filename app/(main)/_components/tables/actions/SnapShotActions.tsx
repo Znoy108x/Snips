@@ -40,17 +40,9 @@ export const SnapShotActions = ({ rowData }: { rowData: SnapShotWithSnippet }) =
     }
 
     // Api Functions
-    const publishCodeSnippet = async (): Promise<void> => {
-        try {
-            await axios.patch(`/api/code-snippet/publish/${rowData.id}`)
-        } catch (err: any) {
-            throw new Error(err?.response?.data)
-        }
-    }
-
     const deleteCodeSnippet = async (): Promise<void> => {
         try {
-            await axios.delete(`/api/code-snippet/${rowData.id}`)
+            await axios.delete(`/api/snap-shot/${rowData.id}`)
         } catch (err: any) {
             throw new Error(err?.response?.data)
         }
@@ -67,26 +59,10 @@ export const SnapShotActions = ({ rowData }: { rowData: SnapShotWithSnippet }) =
                 <DropdownMenuLabel>Actions</DropdownMenuLabel>
                 <DropdownMenuSeparator />
                 <DropdownMenuItem className="w-full" disabled={actionInProgress} onClick={handleDeleteAction}>
-                    <Button className="w-full text-white">
+                    <Button variant={"custom_destructive"} className="w-full text-white">
                         <Trash className="size-4 mr-2" />
                         <span>
                             Delete
-                        </span>
-                    </Button>
-                </DropdownMenuItem>
-                <DropdownMenuItem className="w-full" disabled={actionInProgress}>
-                    <Button className="w-full text-white">
-                        <FilePenLine className="size-4 mr-4" />
-                        <span>
-                            Edit
-                        </span>
-                    </Button>
-                </DropdownMenuItem>
-                <DropdownMenuItem className="w-full" disabled={actionInProgress}>
-                    <Button className="w-full text-white">
-                        <FileDown className="size-4 mr-4" />
-                        <span>
-                            Download
                         </span>
                     </Button>
                 </DropdownMenuItem>

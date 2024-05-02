@@ -30,3 +30,9 @@ export type UserDataWithSnapShots = User & {
 export type SnapShotWithSnippet = SnapShot & {
   codeSnippet: CodeSnippets;
 };
+
+export type CreateSnapShotReqData = {
+  name: string;
+  codeSnippetId: string;
+  gradientName: string;
+};
