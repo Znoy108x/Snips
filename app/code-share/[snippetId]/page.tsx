@@ -17,19 +17,19 @@ const SharedSnippetPage = async ({ params: { snippetId } }: { params: { snippetI
         }
     }) : null
 
+    const isNotValid = !codeSnippet || !codeSnippet.isPublished
 
     return (
         <div className='w-full h-full flex flex-col items-center justify-center bg-accent bg-[url("/pattern.svg")]'>
             {
-                codeSnippet ? (
-                    <ShareEditorComp data={codeSnippet} />
-                ) : (
+                isNotValid ? (
                     <span className='text-xl md:text-2xl lg:text-4xl xl:text-5xl font-semibold capitalize bg-clip-text text-transparent bg-gradient-to-b from-neutral-200 to-neutral-600'>
                         Oops! Something Went Wrong
                     </span>
+                ) : (
+                    <ShareEditorComp data={codeSnippet} />
                 )
             }
-
         </div>
     )
 }
